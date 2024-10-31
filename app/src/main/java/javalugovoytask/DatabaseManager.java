@@ -74,6 +74,7 @@ public class DatabaseManager {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+            System.out.println("Book deleted successfully.");
         }
     }
 
@@ -117,7 +118,13 @@ public class DatabaseManager {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
+                Reader reader = new Reader(name, email);
+                readers.add(reader);
             }
+        }
+        for (Reader reader : readers) {
+            System.out.println("The readers are: ");
+            System.out.println(reader.getName());
 
         }
         return readers;
@@ -128,6 +135,7 @@ public class DatabaseManager {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+            System.out.println("Reader deleted successfully.");
         }
     }
 
@@ -141,8 +149,10 @@ public class DatabaseManager {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 reader = new Reader(name, email);
+
             }
         }
+        System.out.println(reader);
         return reader;
     }
 
