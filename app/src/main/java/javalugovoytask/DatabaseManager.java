@@ -42,7 +42,7 @@ public class DatabaseManager {
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getAuthor());
             statement.setDate(3, book.getPublishedDate());
-            statement.setString(3, book.getIsbn());
+            statement.setString(4, book.getIsbn());
             statement.executeUpdate();
             System.out.println("Book added successfully.");
         } catch (SQLException e) {

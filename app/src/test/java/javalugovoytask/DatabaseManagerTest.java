@@ -5,10 +5,8 @@ import javalugovoytask.dto.Reader;
 
 import org.junit.jupiter.api.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -53,10 +51,30 @@ public class DatabaseManagerTest {
         assertEquals("john.doe@example.com", readerEmail);
 
         dbManager.getAllReaders();
+        assertEquals(2, dbManager.getAllReaders().size());
 
         dbManager.deleteReader(1);
 
         dbManager.getAllReaders();
+        assertEquals(1, dbManager.getAllReaders().size());
+    }
+
+    @Test
+    public void testBook() throws SQLException {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2023, Calendar.OCTOBER, 28);
+        Date publishedDate = new Date(cal.getTimeInMillis());
+
+        dbManager.addBook(new Book("Book Title1", "Mark Author", publishedDate, "11111111111111"));
+        dbManager.addBook(new Book("Book Title2", "Bark Author", publishedDate, "789"));
+
+        Book book = dbManager.findBookByTitle("Book Title1");
+        assertEquals("Book Title1", book.getTitle());
+        dbManager.getAllBooks();
+        assertEquals(2, dbManager.getAllBooks().size());
+        dbManager.deleteBook(1);
+        dbManager.getAllBooks();
+        assertEquals(1, dbManager.getAllBooks().size());
     }
 
 
